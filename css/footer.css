@@ -5,7 +5,7 @@
     background: var(--gray-900);
     color: white;
     position: relative;
-    top:90px;
+    top:190px;
     padding: 20px 20px 30px;
 }
 
@@ -84,4 +84,5 @@
 .settings-toggle:hover {
     background: var(--primary-dark);
 }
+
 
