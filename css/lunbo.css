@@ -34,7 +34,7 @@ body {
     width: 800px;
     height: 600px;
     position: relative;
-    /*border: 1px solid #333333;*/
+    border: 1px solid #333333;
 }
 .ul-content1-text1{
     width: 300px;
@@ -201,6 +201,7 @@ body {
     right: 20px;
 
 }
+
 
 
 
