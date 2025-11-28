@@ -25,14 +25,14 @@ body {
 
 .ul-content1 {
     width: 1220px;
-    height: 600px;
+    height: 700px;
     position: relative;
-    top: 180px;
+    top: 100px;
 }
 
 .ul-content1-text {
     width: 800px;
-    height: 600px;
+    height: 700px;
     position: relative;
     border: 1px solid #333333;
 }
@@ -93,7 +93,7 @@ body {
 
 .carousel-container {
     width: 400px;
-    height: 600px;
+    height: 700px;
     position: relative;
     border-radius: 15px;
     overflow: hidden;
@@ -201,6 +201,7 @@ body {
     right: 20px;
 
 }
+
 
 
 
