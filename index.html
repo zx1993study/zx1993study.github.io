@@ -3,189 +3,408 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>徕控</title>
-    <link rel="stylesheet" href="css/lunbo.css">
-    <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/footer.css">
+    <title>徕控 LiveControl | 专业带货助播中控系统</title>
+    <!-- 引入字体图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* 配色方案：科技时尚深色系 */
+            --bg-dark: #0f1016;
+            --bg-secondary: #161823;
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --accent-cyan: #00f2ea;
+            --accent-pink: #ff0080;
+            --text-main: #ffffff;
+            --text-muted: #8b9bb4;
+            --card-glass: rgba(255, 255, 255, 0.05);
+            --border-glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 动态背景光效 */
+        .ambient-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(118, 75, 162, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 导航栏 */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(15, 16, 22, 0.8);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 12px;
+            height: 12px;
+            background: #ff4757;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #ff4757;
+            animation: pulse 2s infinite;
+        }
+
+        .nav-btn {
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: var(--text-main);
+            color: var(--bg-dark);
+        }
+
+        /* Hero 区域 */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 20px 60px;
+            position: relative;
+        }
+
+        .badge {
+            background: rgba(118, 75, 162, 0.2);
+            color: #dcd6f7;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(118, 75, 162, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #fff, #a5b4fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h1 span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        /* 支持平台图标 */
+        .platforms {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 50px;
+            justify-content: center;
+        }
+
+        .platform-icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+
+        .platform-icon i {
+            font-size: 28px;
+            background: var(--card-glass);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .platform-icon:hover {
+            color: var(--text-main);
+            transform: translateY(-5px);
+        }
+
+        /* 核心 CTA 按钮 */
+        .cta-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(118, 75, 162, 0.6);
+        }
+
+        /* 场景功能区 */
+        .features-section {
+            padding: 100px 8%;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-glass);
+            padding: 40px;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        /* 卡片悬停光效 */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-pink));
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 24px;
+            width: 64px;
+            height: 64px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-title {
+            font-size: 24px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* 标签 */
+        .tag {
+            display: inline-block;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.1);
+            margin-bottom: 20px;
+            color: var(--accent-cyan);
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        /* 动画 */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 71, 87, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 40px; }
+            .platforms { flex-wrap: wrap; }
+            nav { padding: 20px; }
+        }
+    </style>
 </head>
 <body>
-<div class="app">
+
+    <!-- 顶部光晕 -->
+    <div class="ambient-glow"></div>
+
     <!-- 导航栏 -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <i class="fas fa-rocket"></i>
-                <span>徕控</span>
-            </div>
-            <!--            <div class="nav-menu">-->
-            <!--                <a href="#home" class="nav-link active">首页</a>-->
-            <!--                <a href="#services" class="nav-link">服务</a>-->
-            <!--                <a href="#products" class="nav-link">产品</a>-->
-            <!--                <a href="#cases" class="nav-link">案例</a>-->
-            <!--                <a href="#about" class="nav-link">关于我们</a>-->
-            <!--                <a href="#contact" class="nav-link">联系我们</a>-->
-            <!--            </div>-->
-            <!--            <div class="nav-actions">-->
-            <!--                <button class="btn-login">登录</button>-->
-            <!--                <button class="btn-primary">免费试用</button>-->
-            <!--                <button class="nav-toggle">-->
-            <!--                    <i class="fas fa-bars"></i>-->
-            <!--                </button>-->
-            <!--            </div>-->
+    <nav>
+        <div class="logo">
+            <div class="logo-icon"></div>
+            徕控 LiveControl
+        </div>
+        <div>
+            <a href="#" class="nav-btn">下载客户端</a>
         </div>
     </nav>
 
-    <div class="ul-content1">
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-            <div class="ul-content1-text">
-                <div class="ul-content1-text1">
-                    <div style="border-radius: 5px;background:black;color:white;line-height: 50px">
-                        <h3>徕控</h3>
-                    </div>
-                    <div style="border-radius: 5px;line-height: 50px">
-                        <h3>无线智能中控平台</h3>
-                    </div>
-                </div>
-                <div class="ul-content1-text2">
-                    <h1>带货助播中控（单平台直播）</h1>
-                </div>
-                <div class="ul-content1-text3">
-                    同时直播一个平台，目前支持6大平台、抖音、快手、视频号、淘宝、拼多多、小红书，各种功能非常齐全，适配各种场景、平播、憋单、快速过品、一物一拍、多SKU
-                </div>
-                <div class="ul-content1-text4">
-                    <button id="btn-download1" class="btn-download">立即下载</button>
-                </div>
+    <!-- 主视觉区 (Hero) -->
+    <section class="hero">
+        <div class="badge">专注单平台 · 极致控场</div>
+        <h1>重新定义<br><span>助播中控</span>体验</h1>
+        <p>专为带货直播设计的智能中控台。无缝适配抖音、快手、视频号，让平播更稳、憋单更爆、过品更快。</p>
 
+        <!-- 平台支持 -->
+        <div class="platforms">
+            <div class="platform-icon">
+                <i class="fab fa-tiktok" style="color: #ffffff;"></i>
+                <span>抖音直播</span>
             </div>
-            <div class="carousel-container">
-                <div class="carousel-slides">
-                    <div class="slide active" style="background-image: url('images/photo1.png')">
-                        <div class="slide-content">
-                            <h3>自然风光</h3>
-                            <p>探索大自然的壮丽景色和无限魅力</p>
-                        </div>
-                    </div>
-                    <div class="slide" style="background-image: url('images/photo2.png')">
-                        <div class="slide-content">
-                            <h3>城市景观</h3>
-                            <p>感受现代都市的繁华与活力</p>
-                        </div>
-                    </div>
-                    <div class="slide" style="background-image: url('images/photo3.png')">
-                        <div class="slide-content">
-                            <h3>科技创新</h3>
-                            <p>体验科技带来的无限可能</p>
-                        </div>
-                    </div>
-                    <div class="slide" style="background-image: url('images/photo4.png')">
-                        <div class="slide-content">
-                            <h3>艺术创作</h3>
-                            <p>欣赏创意与美感的完美结合</p>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="nav-btn prev-btn">‹</button>
-                <button class="nav-btn next-btn">›</button>
-
-                <div class="carousel-controls">
-                    <button class="control-btn active"></button>
-                    <button class="control-btn"></button>
-                    <button class="control-btn"></button>
-                    <button class="control-btn"></button>
-                </div>
+            <div class="platform-icon">
+                <i class="fas fa-video" style="color: #ff7635;"></i> <!-- 快手橙色 -->
+                <span>快手直播</span>
+            </div>
+            <div class="platform-icon">
+                <i class="fab fa-weixin" style="color: #07c160;"></i>
+                <span>视频号</span>
             </div>
         </div>
-    </div>
 
-    <!-- 页脚 -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>联系我们</h4>
+        <div class="cta-group">
+            <a href="#" class="btn-primary">立即免费试用</a>
+        </div>
+    </section>
+
+    <!-- 功能场景区 -->
+    <section class="features-section">
+        <div class="section-title">
+            <h2>全场景适配，游刃有余</h2>
+            <p style="color: var(--text-muted);">针对不同直播节奏深度优化，从容应对每一次开播</p>
+        </div>
+
+        <div class="cards-grid">
+            <!-- 场景1：平播 -->
+            <div class="feature-card">
+                <span class="tag">稳健流</span>
+                <div class="card-icon" style="color: #6c5ce7;">
+                    <i class="fas fa-stream"></i>
+                </div>
+                <h3 class="card-title">专业平播模式</h3>
+                <p class="card-desc">
+                    自动化商品轮播与讲解弹窗。释放助播精力，专注于互动与回复，适合日销型直播间，让标准动作零失误。
+                </p>
+            </div>
+
+            <!-- 场景2：憋单 -->
+            <div class="feature-card">
+                <span class="tag" style="color: var(--accent-pink);">爆发流</span>
+                <div class="card-icon" style="color: var(--accent-pink);">
+                    <i class="fas fa-fire-alt"></i>
+                </div>
+                <h3 class="card-title">极速憋单神器</h3>
+                <p class="card-desc">
+                    毫秒级库存控制。精准卡点上架、改价，配合实时在线人数监控，完美把控直播间流量波峰，引爆转化。
+                </p>
+            </div>
+
+            <!-- 场景3：多SKU -->
+            <div class="feature-card">
+                <span class="tag" style="color: var(--accent-cyan);">极速流</span>
+                <div class="card-icon" style="color: var(--accent-cyan);">
+                    <i class="fas fa-th-large"></i>
+                </div>
+                <h3 class="card-title">海量 SKU 场控</h3>
+                <p class="card-desc">
+                    专为服装、饰品等多品类直播设计。支持快捷键切品，0延迟同步画面贴片，快速过品不卡顿，效率提升300%。
+                </p>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 有易思科技 版权所有</p>
-        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 徕控 LiveControl. All Rights Reserved. 打造最懂助播的中控系统。</p>
     </footer>
-</div>
 
-<script>
-    class SimpleCarousel {
-        constructor(container) {
-            this.container = container;
-            this.slides = container.querySelectorAll('.slide');
-            this.controlBtns = container.querySelectorAll('.control-btn');
-            this.prevBtn = container.querySelector('.prev-btn');
-            this.nextBtn = container.querySelector('.next-btn');
-            this.currentIndex = 0;
-            this.autoPlayInterval = null;
-
-            this.init();
-        }
-
-        init() {
-            // 绑定事件监听器
-            this.prevBtn.addEventListener('click', () => this.prevSlide());
-            this.nextBtn.addEventListener('click', () => this.nextSlide());
-
-            this.controlBtns.forEach((btn, index) => {
-                btn.addEventListener('click', () => this.goToSlide(index));
-            });
-
-            // 启动自动播放
-            this.startAutoPlay();
-
-            // 鼠标悬停时暂停自动播放
-            this.container.addEventListener('mouseenter', () => this.stopAutoPlay());
-            this.container.addEventListener('mouseleave', () => this.startAutoPlay());
-        }
-
-        goToSlide(index) {
-            // 隐藏当前幻灯片
-            this.slides[this.currentIndex].classList.remove('active');
-            this.controlBtns[this.currentIndex].classList.remove('active');
-
-            // 显示新幻灯片
-            this.currentIndex = index;
-            this.slides[this.currentIndex].classList.add('active');
-            this.controlBtns[this.currentIndex].classList.add('active');
-        }
-
-        nextSlide() {
-            const nextIndex = (this.currentIndex + 1) % this.slides.length;
-            this.goToSlide(nextIndex);
-        }
-
-        prevSlide() {
-            const prevIndex = (this.currentIndex - 1 + this.slides.length) % this.slides.length;
-            this.goToSlide(prevIndex);
-        }
-
-        startAutoPlay() {
-            this.autoPlayInterval = setInterval(() => {
-                this.nextSlide();
-            }, 4000);
-        }
-
-        stopAutoPlay() {
-            if (this.autoPlayInterval) {
-                clearInterval(this.autoPlayInterval);
-                this.autoPlayInterval = null;
-            }
-        }
-    }
-
-    // 初始化轮播
-    document.addEventListener('DOMContentLoaded', () => {
-        const carouselContainer = document.querySelector('.carousel-container');
-        new SimpleCarousel(carouselContainer);
-    });
-    document.getElementById('btn-download1').addEventListener('click', function () {
-        window.location.href = 'https://keyboard-monitor-ota.tos-cn-beijing.volces.com/1.0.0/MyAppInstaller.exe';
-    });
-</script>
 </body>
-
 </html>
